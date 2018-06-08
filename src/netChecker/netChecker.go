@@ -2,19 +2,20 @@ package main
 
 import (
 	"net/http"
-	"netChecker/controller"
+	"netguarder/controller"
+	"common/sysinit"
 	"common/utils"
 	"common/constant"
 )
 
 func init(){
-	utils.SetLogLevel(utils.LoadEnvVarInt(constant.ENV_LOG_LEVEL, constant.LOG_LEVEL_ERROR))
+	utils.SetLogLevel(constant.LOG_LEVEL_ERROR)
+	sysinit.InitConfig()
 	controller.Init()
 }
 
 func main() {
-	go controller.GetKubeResAndPublish()
-	go controller.ReceiveAndSaveData()
+	go controller.GetKubeResToRedis()
 
 	fs := http.FileServer(http.Dir("frontend/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -23,8 +24,6 @@ func main() {
 	http.HandleFunc("/report/false", controller.False)
 	http.HandleFunc("/simple/true",controller.TrueSimple)
 	http.HandleFunc("/simple/false",controller.FalseSimple)
-	http.HandleFunc("/nodes",controller.NodeToNode)
-
 	http.ListenAndServe(":8080", nil)
 }
 

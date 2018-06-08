@@ -1,16 +1,14 @@
 package types
 
-import "encoding/json"
-
 type Report []*Record
 
 type Record struct {
-	Type   string `json:"type"`
+	Type   interface{} `json:"type"`
 	From   interface{} `json:"from"`
 	To     interface{} `json:"to"`
-	Result bool `json:"result"`
-	Reason string `json:"reason"`
-	Timestamp   string `json:"timestamp"`
+	Result interface{} `json:"result"`
+	Reason interface{} `json:"reason"`
+	Time   interface{} `json:"time"`
 }
 
 //type Report struct {
@@ -45,13 +43,9 @@ type Port struct {
 type Config struct {
 	Apiserver string
 	RedisHost string
-	NodePort  int32
+	NodePort  string
 }
 
-type PubSubInfo struct{
-	PingInfos []*PodInfo
-	Data json.RawMessage
-}
 
 
 

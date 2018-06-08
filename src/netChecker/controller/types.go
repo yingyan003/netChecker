@@ -5,37 +5,23 @@ import (
 	"common/types"
 )
 
-type Record struct {
-	Type      string          `json:"type"`
-	From      types.PodInfo  `json:"from"`
-	To        json.RawMessage `json:"to"`
-	Result    bool            `json:"result"`
-	Timestamp string          `json:"timestamp"`
-	Reason    string          `json:"reason"`
+type RecordJson struct {
+	Type   interface{}     `json:"type"`
+	From   *types.PodInfo  `json:"from"`
+	To     json.RawMessage `json:"to"`
+	Result interface{}     `json:"result"`
+	Time   interface{}     `json:"time"`
+	Reason interface{}     `json:"reason"`
 }
 
 type RecordSimp struct {
-	SrcName   string `json:"srcName"`
-	DstName   string `json:'dstName'`
-	Result    bool   `json:"result"`
-	Timestamp string `json:"timestamp"`
-	Reason    string `json:"reason"`
+	SrcName interface{} `json:"srcName"`
+	DstName interface{} `json:'dstName'`
+	Result  interface{} `json:"result"`
+	Time    interface{} `json:"time"`
+	Reason  interface{} `json:"reason"`
 }
 
-type RecordNodeToNode struct {
-	SrcIp string        `json:"srcIp"`
-	To    []NodeResult `json:"to"`
-}
+type RecordJsons []*RecordJson
 
-type NodeResult struct {
-	DstIP     string `json:"dstIp"`
-	Result    bool   `json:result`
-	Timestamp string `json:"timestamp"`
-	Reason    string `json:"reason"`
-}
-
-type Records []Record
-
-type ReportSimp []RecordSimp
-
-type ReportNodeToNode []RecordNodeToNode
+type ReportSimp []*RecordSimp

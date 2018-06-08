@@ -1,178 +1,141 @@
 package controller
 
 import (
+	cach "github.com/maxwell92/gokits/cache"
+	"common/sysinit"
 	"common/types"
 	mylog "github.com/maxwell92/gokits/log"
 	"common/utils"
+	"strconv"
 	"os"
 	"encoding/json"
 	"common/constant"
 	"time"
-	"github.com/garyburd/redigo/redis"
-	"strings"
 )
 
 var log *mylog.Logger
-var cache *utils.RedisClient
+var conf *types.Config
+var cache *cach.RedisCache
 
-func Init() {
+func Init(){
 	log = utils.GetLog()
-	utils.NewRedis(constant.NETCHECK_MAX_IDLE)
-	cache = utils.Redis
+	conf= sysinit.GetConfig()
+	cache = cach.NewRedisCache()
 }
 
 func NetCheck() {
-	waitCh := make(chan int)
-
-	go subPod()
-	go subNode()
-	go subSvc()
-
-	//防止主程序结束
-	<-waitCh
-}
-
-func subPod() {
-	var subConn *redis.PubSubConn
-	subConn = cache.GetSubConn(constant.CHANNEL_POD)
-	if subConn == nil {
-		subConn=cache.RetrySubConn(constant.CHANNEL_POD)
-	}
-	for {
-		var report types.Report
-		var pongInfos []*types.PodInfo
-		psInfo := new(types.PubSubInfo)
-
-		data := cache.ReceiveSubMessage(subConn)
-		if data != nil {
-			log.Infof("subPod: ReceiveSubMessage success. message=%s", string(data))
-			err := json.Unmarshal(data, psInfo)
-			if err != nil {
-				log.Errorf("subPod Unmarshal psInfo failed. err=%s, psInfo=%s", err, psInfo)
-			}
-			err = json.Unmarshal(psInfo.Data, &pongInfos)
-			if err != nil {
-				log.Errorf("subPod Unmarshal pongInfos failed. err=%s, pongInfos=%s", err, pongInfos)
-			}
-			self := getSelfPod(psInfo.PingInfos)
-			if self == nil {
-				log.Errorf("subPod getSelfPod failed.")
-				continue
-			}
-			log.Infof("subPod getSelfPod success")
-			for _, pod := range pongInfos {
-				r := netTest(pod.PodIP, 8080, "pod", &self, &pod)
-				report = append(report, r)
-			}
-			publist(constant.CHANNEL_REPORT_POD, report)
-		}
+	timer := time.NewTicker(time.Duration(utils.LoadEnvVarInt(constant.ENV_TELNET_TIMER, constant.TELNET_TIMER)) * time.Second)
+	for _ = range timer.C {
+		CheckPod()
+		CheckNode(conf.NodePort)
+		CheckService()
 	}
 }
 
-func subNode() {
-	var subConn *redis.PubSubConn
+func CheckPod() {
+	var report types.Report
+	self := types.PodInfo{}
+	pingInfoList := make([]types.PodInfo, 0)
+	pongInfoList := make([]types.PodInfo, 0)
 
-	nodePort := int32(utils.LoadEnvVarInt(constant.ENV_NODEPORT, constant.NODEPORT))
-	subConn = cache.GetSubConn(constant.CHANNEL_NODE)
-	if subConn == nil {
-		subConn=cache.RetrySubConn(constant.CHANNEL_POD)
-	}
-	for {
-		var report types.Report
-		var nodeInfos []*types.NodeInfo
-		psInfo := new(types.PubSubInfo)
-
-		data := cache.ReceiveSubMessage(subConn)
-		if data != nil {
-			log.Infof("subNode: ReceiveSubMessage success. message=%s", string(data))
-			err := json.Unmarshal(data, psInfo)
-			if err != nil {
-				log.Errorf("subNode Unmarshal psInfo failed. err=%s, psInfo=%s", err, psInfo)
-			}
-			err = json.Unmarshal(psInfo.Data, &nodeInfos)
-			if err != nil {
-				log.Errorf("subNode Unmarshal nodeInfos failed. err=%s, nodeInfos=%s", err, nodeInfos)
-			}
-			utils.CheckError("subNode JsonUnmarshal", err)
-			self := getSelfPod(psInfo.PingInfos)
-			if self == nil {
-				log.Errorf("subNode getSelfPod failed.")
-				continue
-			}
-			log.Infof("subNode getSelfPod success")
-			for _, node := range nodeInfos {
-				r := netTest(node.HostIP, nodePort, "node", &self, &node)
-				report = append(report, r)
-			}
-			publist(constant.CHANNEL_REPORT_NODE, report)
-		}
-	}
-}
-
-func subSvc() {
-	var subConn *redis.PubSubConn
-
-	subConn = cache.GetSubConn(constant.CHANNEL_SVC)
-	if subConn == nil {
-		subConn=cache.RetrySubConn(constant.CHANNEL_POD)
-	}
-	for {
-		var report types.Report
-		psInfo := new(types.PubSubInfo)
-		svcInfo := new(types.ServiceInfo)
-
-		data := cache.ReceiveSubMessage(subConn)
-		if data != nil {
-			log.Infof("subSvc: ReceiveSubMessage success. message=%s", string(data))
-			err := json.Unmarshal(data, psInfo)
-			if err != nil {
-				log.Errorf("subSvc Unmarshal psInfo failed. err=%s, psInfo=%s", err, psInfo)
-			}
-			err = json.Unmarshal(psInfo.Data, svcInfo)
-			if err != nil {
-				log.Errorf("subSvc Unmarshal svcInfo failed. err=%s, svcInfo=%s", err, svcInfo)
-			}
-			utils.CheckError("subSvc JsonUnmarshal", err)
-			self := getSelfPod(psInfo.PingInfos)
-			if self == nil {
-				log.Errorf("subSvc getSelfPod failed.")
-				continue
-			}
-			log.Infof("subSvc getSelfPod success. self=%s",*self)
-			for _, port := range svcInfo.Ports {
-				//这里实际上只测试了svc的port端口，并没有测试nodeport端口
-				r := netTest(svcInfo.ClusterIP, port.Port, "service", &self, &port)
-				report = append(report, r)
-			}
-			publist(constant.CHANNEL_REPORT_SVC, report)
-		}
-	}
-}
-
-func publist(channel string, data interface{}) {
-	message, err := json.Marshal(data)
-	if err != nil {
-		log.Errorf("Publist marshal data failed.")
-	}
-
-	ok, err := cache.Publish(channel, message)
-	if !ok {
-		log.Errorf("Publist failed. err=%v, channel=%s, message=%s", err, channel, message)
+	pingdata := cache.Get("pinglist")
+	if pingdata == "" {
 		return
 	}
-	log.Infof("Publist success. channel=%s, message=%s", channel, message)
+	pongdata := cache.Get("ponglist")
+	if pongdata == "" {
+		return
+	}
+
+	err := json.Unmarshal([]byte(pingdata), &pingInfoList)
+	utils.CheckError("TestPod JsonUnmarshal", err)
+
+	getSelfPod(&self, &pingInfoList)
+	log.Infof("CheckPod PodName=%s, HostIP=%s, PodIP=%s, Status=%s", self.Name, self.HostIP, self.PodIP, self.Status)
+
+	err = json.Unmarshal([]byte(pongdata), &pongInfoList)
+	utils.CheckError("CheckPod JsonUnmarshal", err)
+
+	for _, pod := range pongInfoList {
+		r := netTest(pod.PodIP, 8080, "pod", &self, &pod)
+		report = append(report, r)
+	}
+
+	saveToRedis(report, self.HostIP, "pod")
+	log.Infoln("CheckPod Success")
+}
+
+func CheckNode(nodeport string) {
+	var report types.Report
+	var pingdata, data string
+	self := types.PodInfo{}
+	pingInfoList := make([]types.PodInfo, 0)
+	nodeInfoList := make([]types.NodeInfo, 0)
+
+	if pingdata = cache.Get("pinglist"); pingdata == "" {
+		return
+	}
+	err := json.Unmarshal([]byte(pingdata), &pingInfoList)
+	utils.CheckError("CheckNode JsonUnmarshal", err)
+
+	getSelfPod(&self, &pingInfoList)
+	log.Infof("CheckNode PodName=%s, HostIP=%s, PodIP=%s, Status=%s", self.Name, self.HostIP, self.PodIP, self.Status)
+
+	if data = cache.Get("nodelist"); data == "" {
+		return
+	}
+	json.Unmarshal([]byte(data), &nodeInfoList)
+
+	np, _ := strconv.Atoi(nodeport)
+	for _, node := range nodeInfoList {
+		r := netTest(node.HostIP, int32(np), "node", &self, &node)
+		report = append(report, r)
+	}
+
+	saveToRedis(report, self.HostIP, "node")
+	log.Infoln("CheckNode Success")
+}
+
+func CheckService() {
+	var report types.Report
+	var pingdata, data string
+	self := types.PodInfo{}
+	serviceInfo := types.ServiceInfo{}
+	pingInfoList := make([]types.PodInfo, 0)
+
+	if pingdata = cache.Get("pinglist"); pingdata == "" {
+		return
+	}
+
+	err := json.Unmarshal([]byte(pingdata), &pingInfoList)
+	utils.CheckError("CheckService JsonUnmarshal", err)
+
+	getSelfPod(&self, &pingInfoList)
+	log.Infof("CheckService PodName=%s, HostIP=%s, PodIP=%s, Status=%s", self.Name, self.HostIP, self.PodIP, self.Status)
+
+	if data = cache.Get("service"); data == "" {
+		return
+	}
+	json.Unmarshal([]byte(data), &serviceInfo)
+
+	for _, port := range serviceInfo.Ports {
+		r := netTest(serviceInfo.ClusterIP, port.Port, "service", &self, &port)
+		report = append(report, r)
+	}
+
+	saveToRedis(report, self.HostIP, "service")
+	log.Infoln("CheckService Success")
 }
 
 //从pog列表中获取本容器所在的pod
-func getSelfPod(list []*types.PodInfo) *types.PodInfo {
+func getSelfPod(self *types.PodInfo, list *[]types.PodInfo) {
 	hostname, _ := os.Hostname()
-	for _, pod := range list {
-		if strings.EqualFold(hostname, pod.Name) {
-			log.Infof("getSelfPod success. hostname=%s, selfPod=%s", hostname, pod)
-			return pod
+	for _, pod := range *list {
+		if hostname == pod.Name {
+			*self = pod
+			break
 		}
 	}
-	return nil
 }
 
 func netTest(ip string, port int32, tp string, from, to interface{}) *types.Record {
@@ -189,8 +152,7 @@ func netTest(ip string, port int32, tp string, from, to interface{}) *types.Reco
 		From:   from,
 		To:     to,
 		Result: connected,
-		Timestamp:   time.Now().Format("2006-01-02 15:04:05"),
-		Reason: "",
+		Time: time.Now().Format("2006-01-02 15:04:05"),
 	}
 	if !connected && !debugConn {
 		r.Reason = constant.DEBUG_FAIL
@@ -203,13 +165,13 @@ func netTest(ip string, port int32, tp string, from, to interface{}) *types.Reco
 	switch to.(type) {
 	case *types.PodInfo:
 		pod, _ := to.(*types.PodInfo)
-		log.Infof("CheckPod success.from=%s, to=%s, result=%v, reason=%s\n", podIP, pod.PodIP, r.Result, r.Reason)
+		log.Errorf("CheckPod failed.from=%s, to=%s, result=%v, reason=%s\n", podIP, pod.PodIP, r.Result, r.Reason)
 	case *types.NodeInfo:
 		node, _ := to.(*types.NodeInfo)
-		log.Infof("CheckNode success.from=%s, to=%s, result=%v, reason=%s\n", podIP, node.HostIP, r.Result, r.Reason)
+		log.Errorf("CheckNode failed.from=%s, to=%s, result=%v, reason=%s\n", podIP, node.HostIP, r.Result, r.Reason)
 	case *types.Port:
 		port, _ := to.(*types.Port)
-		log.Infof("CheckSvc success.from=%s, to=%s, result=%v, reason=%s\n", podIP, port, r.Result, r.Reason)
+		log.Errorf("CheckNode failed.from=%s, to=%s, result=%v, reason=%s\n", podIP, port, r.Result, r.Reason)
 	}
 
 	return r
@@ -218,4 +180,19 @@ func netTest(ip string, port int32, tp string, from, to interface{}) *types.Reco
 func goTelnet(ip string, port int32, ch chan bool) {
 	connected := utils.Telnet(ip, port, 1)
 	ch <- connected
+}
+
+func saveToRedis(report []*types.Record, hostIP, types string) {
+	var key string
+	result, _ := json.Marshal(report)
+	switch types {
+	case "pod":
+		key = "pod:" + hostIP + ":pod"
+	case "node":
+		key = "pod:" + hostIP + ":noce"
+	case "service":
+		key = "pod:" + hostIP + ":service"
+	}
+	cache.Set(key, string(result))
+	log.Infof("saveToRedis key=%s, value=%s\n", key, string(result))
 }
