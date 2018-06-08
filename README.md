@@ -1,15 +1,10 @@
-netChecker: k8s集群网络连通性测试工具
-================================
-
 # 背景
-
 kubernetes（k8s）集群的网络状况有时会出现问题。应用容器间有时访问不通，而业务方不确定具体原因，只能找运维人员。
 运维人员可能得逐一排查。为减轻运维人员的工作负担，使得定位问题更快速，且能够一键获取集群
 网络连通性的情况，实时了解集群网络状况，使得运维更高效，所以有了这个工具。
 
 
 # 简介
-
 本项目是一个网络检测工具，旨在检测k8s集群的网络连通性。工具名为NetChecker（ping-pong也行）
 
 ### 指标：
@@ -134,4 +129,171 @@ spec:
         - containerPort: 8080
         env:
         - name: REDIS_HOST
-          value: re
+          value: redis-master-svc.zxy:6379
+        - name: LOG_LEVEL
+          value: "3"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+```
+
+### netChecker-svc.yaml
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: netChecker-svc
+spec:
+  ports:
+  - nodePort: 32089
+    port: 8080
+    protocol: TCP
+  selector:
+    name: netChecker
+  type: NodePort
+```
+
+### ping-daemonset.yaml
+
+```
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: ping
+  namespace: zxy
+  labels:
+    name: ping
+    type: ping
+spec:
+  selector:
+    matchLabels:
+      name: ping
+      type: ping
+  template:
+    metadata:
+      labels:
+        name: ping
+        type: ping
+    spec:
+      containers:
+      - env:
+        - name: REDISHOST
+          value: redis-master-svc.zxy:6379
+        - name: NODEPORT
+          value: "32088"
+        - name: LOG_LEVEL
+          value: "3"
+        name: ping
+        image: img.reg.3g:15000/ping:2788
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+```
+
+### pong-daemonset.yaml
+
+```
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: pong
+  namespace: zxy
+  labels:
+    name: pong
+    type: pong
+spec:
+  selector:
+    matchLabels:
+      name: pong
+      type: pong
+  template:
+    metadata:
+      labels:
+        name: pong
+        type: pong
+    spec:
+      containers:
+      - env:
+        - name: REDIS_HOST
+          value: redis-master-svc.zxy:6379
+        - name: REDIS_MAX_ACTIVE_CONN
+          value: "100"
+        name: pong
+        image: img.reg.3g:15000/pong:2730
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+```
+
+### pong-svc.yaml
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: netChecker-svc
+spec:
+  ports:
+  - nodePort: 32089
+    port: 8080
+    protocol: TCP
+  selector:
+    name: netChecker
+  type: NodePort
+
+```
+
+当代码编写测试完成后，推到gitlab编译并打镜像，然后推到镜像仓库。
+镜像准备好后，开始编写yaml文件。准备工作完成后就可以开始部署应用了。
+
+备注：kubectl的操作在k8s的master节点上
+
+#### 部署netChecker
+
+部署deployment
+
+```部署deployment
+kubectl create -f netChecker-deployment.yaml
+
+```
+
+部署deployment对应的service
+
+```
+kubectl create -f netChecker-svc.yaml
+```
+#### 部署ping
+
+```
+kubectl create -f ping-daemonset.yaml
+```
+
+### 部署pong
+
+部署daemonSet
+```
+kubectl create -f pong-daemonset.yaml
+```
+
+部署daemonSet对应的service
+
+```
+kubectl create -f pong pong-svc.yaml
+```
