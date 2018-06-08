@@ -1,0 +1,3923 @@
+{
+"data":[
+    {
+        "userName": "xueyan.xu",
+        "dcName": "电信",
+        "dcId": 26,
+        "orgName": "dev",
+        "deploymentName": "app-2",
+        "updateTime": "2017-02-2217: 57: 20+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "app-2",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/app-2",
+                "uid": "4d3b43f2-f8e5-11e6-9033-005056915fa1",
+                "resourceVersion": "15475314",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 57: 20Z",
+                "labels": {
+                    "author": "xueyan.xu",
+                    "name": "app-2",
+                    "value111": "key111",
+                    "value222": "kay222",
+                    "version": "test2"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 3,
+                "selector": {
+                    "matchLabels": {
+                        "author": "xueyan.xu",
+                        "name": "app-2",
+                        "value111": "key111",
+                        "value222": "kay222",
+                        "version": "test2"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-2",
+                            "value111": "key111",
+                            "value222": "kay222",
+                            "version": "test2"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111",
+                                "hostPath": {
+                                    "path": "app1/file111"
+                                }
+                            },
+                            {
+                                "name": "app1name222",
+                                "hostPath": {
+                                    "path": "app1/file222"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-2",
+                                "image": "img.reg.3g: 15000/yce-alpha: test2",
+                                "command": [
+                                    "date333"
+                                ],
+                                "args": [
+                                    "date444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 2300,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 3200,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "111"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "222"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "333"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111",
+                                        "mountPath": "app1/dc111"
+                                    },
+                                    {
+                                        "name": "app1name222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc222"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url",
+                                        "port": 2300,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 2300,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 2300,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 3,
+                "updatedReplicas": 3,
+                "unavailableReplicas": 3
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "15621075"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "app-2-2644673129-0zgsb",
+                        "generateName": "app-2-2644673129-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/app-2-2644673129-0zgsb",
+                        "uid": "4df368ae-f8e5-11e6-9033-005056915fa1",
+                        "resourceVersion": "15475306",
+                        "creationTimestamp": "2017-02-22T09: 57: 22Z",
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-2",
+                            "pod-template-hash": "2644673129",
+                            "value111": "key111",
+                            "value222": "kay222",
+                            "version": "test2"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "app-2-2644673129",
+                                    "uid": "4d4a1cb0-f8e5-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15475291"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111",
+                                "hostPath": {
+                                    "path": "app1/file111"
+                                }
+                            },
+                            {
+                                "name": "app1name222",
+                                "hostPath": {
+                                    "path": "app1/file222"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-2",
+                                "image": "img.reg.3g: 15000/yce-alpha: test2",
+                                "command": [
+                                    "date333"
+                                ],
+                                "args": [
+                                    "date444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 2300,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 3200,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "111"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "222"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "333"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111",
+                                        "mountPath": "app1/dc111"
+                                    },
+                                    {
+                                        "name": "app1name222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc222"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url",
+                                        "port": 2300,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 2300,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 2300,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending"
+                    }
+                },
+                {
+                    "metadata": {
+                        "name": "app-2-2644673129-6pvrh",
+                        "generateName": "app-2-2644673129-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/app-2-2644673129-6pvrh",
+                        "uid": "4d82caf0-f8e5-11e6-9033-005056915fa1",
+                        "resourceVersion": "15475295",
+                        "creationTimestamp": "2017-02-22T09: 57: 21Z",
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-2",
+                            "pod-template-hash": "2644673129",
+                            "value111": "key111",
+                            "value222": "kay222",
+                            "version": "test2"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "app-2-2644673129",
+                                    "uid": "4d4a1cb0-f8e5-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15475291"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111",
+                                "hostPath": {
+                                    "path": "app1/file111"
+                                }
+                            },
+                            {
+                                "name": "app1name222",
+                                "hostPath": {
+                                    "path": "app1/file222"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-2",
+                                "image": "img.reg.3g: 15000/yce-alpha: test2",
+                                "command": [
+                                    "date333"
+                                ],
+                                "args": [
+                                    "date444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 2300,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 3200,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "111"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "222"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "333"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111",
+                                        "mountPath": "app1/dc111"
+                                    },
+                                    {
+                                        "name": "app1name222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc222"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url",
+                                        "port": 2300,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 2300,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 2300,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending"
+                    }
+                },
+                {
+                    "metadata": {
+                        "name": "app-2-2644673129-cptg6",
+                        "generateName": "app-2-2644673129-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/app-2-2644673129-cptg6",
+                        "uid": "4dc71c33-f8e5-11e6-9033-005056915fa1",
+                        "resourceVersion": "15475298",
+                        "creationTimestamp": "2017-02-22T09: 57: 21Z",
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-2",
+                            "pod-template-hash": "2644673129",
+                            "value111": "key111",
+                            "value222": "kay222",
+                            "version": "test2"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "app-2-2644673129",
+                                    "uid": "4d4a1cb0-f8e5-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15475291"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111",
+                                "hostPath": {
+                                    "path": "app1/file111"
+                                }
+                            },
+                            {
+                                "name": "app1name222",
+                                "hostPath": {
+                                    "path": "app1/file222"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-2",
+                                "image": "img.reg.3g: 15000/yce-alpha: test2",
+                                "command": [
+                                    "date333"
+                                ],
+                                "args": [
+                                    "date444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 2300,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 3200,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "111"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "222"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "333"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111",
+                                        "mountPath": "app1/dc111"
+                                    },
+                                    {
+                                        "name": "app1name222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc222"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url",
+                                        "port": 2300,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 2300,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 2300,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending"
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "creationTimestamp": null
+            },
+            "spec": {
+                "ports": null,
+                "selector": null
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "办公网",
+        "dcId": 1,
+        "orgName": "dev",
+        "deploymentName": "a6",
+        "updateTime": "2017-02-2217: 49: 19+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a6",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a6",
+                "uid": "2e37b110-f8e4-11e6-977e-44a84240716a",
+                "resourceVersion": "65831814",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 49: 19Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a6",
+                    "version": "1.7.9"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a6",
+                        "version": "1.7.9"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a6",
+                            "version": "1.7.9"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a6",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "availableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "65998632"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a6-2280058532-dwfgt",
+                        "generateName": "a6-2280058532-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a6-2280058532-dwfgt",
+                        "uid": "2e3c4b07-f8e4-11e6-977e-44a84240716a",
+                        "resourceVersion": "65991999",
+                        "creationTimestamp": "2017-02-22T09: 49: 19Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a6",
+                            "pod-template-hash": "2280058532",
+                            "version": "1.7.9"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a6-2280058532",
+                                    "uid": "2e38c1b0-f8e4-11e6-977e-44a84240716a",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "65831789"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            },
+                            {
+                                "name": "default-token-5gjnz",
+                                "secret": {
+                                    "secretName": "default-token-5gjnz"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a6",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-5gjnz",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.21.1.11",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Running",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "True",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T09: 49: 20Z"
+                            }
+                        ],
+                        "hostIP": "172.21.1.11",
+                        "podIP": "10.0.46.19",
+                        "startTime": "2017-02-22T09: 49: 19Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a6",
+                                "state": {
+                                    "running": {
+                                        "startedAt": "2017-02-23T05: 31: 20Z"
+                                    }
+                                },
+                                "lastState": {
+                                    "terminated": {
+                                        "exitCode": 0,
+                                        "reason": "Completed",
+                                        "startedAt": "2017-02-23T04: 29: 20Z",
+                                        "finishedAt": "2017-02-23T05: 31: 19Z",
+                                        "containerID": "docker: //63590f47e7504a4ea3c5ee6c24067109ad83908ff3c24d0ed16373e08664e266"
+                                    }
+                                },
+                                "ready": true,
+                                "restartCount": 19,
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "imageID": "docker: //sha256: 4911f67feeb8a27ece3c7772fc1ab96b7da3f62ca4d8604643a9b680445639d3",
+                                "containerID": "docker: //404dff10ea867552d2f401f16e06701159b3250ef9e7381ad110ac85c7840e74"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "a6-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/a6-svc",
+                "uid": "2e3a4662-f8e4-11e6-977e-44a84240716a",
+                "resourceVersion": "65831790",
+                "creationTimestamp": "2017-02-22T09: 49: 19Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a6-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "name": "a6"
+                },
+                "clusterIP": "192.168.3.5",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "电信",
+        "dcId": 26,
+        "orgName": "ops",
+        "deploymentName": "a6",
+        "updateTime": "2017-02-2217: 49: 15+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a6",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a6",
+                "uid": "2c0a7383-f8e4-11e6-9033-005056915fa1",
+                "resourceVersion": "15474389",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 49: 15Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a6",
+                    "version": "1.7.9"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a6",
+                        "version": "1.7.9"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a6",
+                            "version": "1.7.9"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a6",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "unavailableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "15621075"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a6-2280058532-bpo6b",
+                        "generateName": "a6-2280058532-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a6-2280058532-bpo6b",
+                        "uid": "2c263915-f8e4-11e6-9033-005056915fa1",
+                        "resourceVersion": "15620676",
+                        "creationTimestamp": "2017-02-22T09: 49: 15Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a6",
+                            "pod-template-hash": "2280058532",
+                            "version": "1.7.9"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a6-2280058532",
+                                    "uid": "2c0ed107-f8e4-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15474375"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a6",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.17.106.54",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "False",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T09: 49: 18Z",
+                                "reason": "ContainersNotReady"
+                            }
+                        ],
+                        "hostIP": "172.17.106.54",
+                        "podIP": "10.0.101.4",
+                        "startTime": "2017-02-22T09: 49: 18Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a6",
+                                "state": {
+                                    "waiting": {
+                                        "reason": "ImagePullBackOff"
+                                    }
+                                },
+                                "lastState": {
+
+                                },
+                                "ready": false,
+                                "restartCount": 0,
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "imageID": ""
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "a6-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/a6-svc",
+                "uid": "2c12709d-f8e4-11e6-9033-005056915fa1",
+                "resourceVersion": "15474376",
+                "creationTimestamp": "2017-02-22T09: 49: 15Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a6-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "name": "a6"
+                },
+                "clusterIP": "192.168.3.114",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "xueyan.xu",
+        "dcName": "电信",
+        "dcId": 26,
+        "orgName": "ops",
+        "deploymentName": "app-1",
+        "updateTime": "2017-02-2217: 48: 41+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "app-1",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/app-1",
+                "uid": "17e7f8f1-f8e4-11e6-9033-005056915fa1",
+                "resourceVersion": "15474301",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 48: 41Z",
+                "labels": {
+                    "author": "xueyan.xu",
+                    "name": "app-1",
+                    "value11111111": "key1111111",
+                    "value222222": "kay2222222",
+                    "version": "test-2016-11-21"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 3,
+                "selector": {
+                    "matchLabels": {
+                        "author": "xueyan.xu",
+                        "name": "app-1",
+                        "value11111111": "key1111111",
+                        "value222222": "kay2222222",
+                        "version": "test-2016-11-21"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-1",
+                            "value11111111": "key1111111",
+                            "value222222": "kay2222222",
+                            "version": "test-2016-11-21"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111111",
+                                "hostPath": {
+                                    "path": "app1/file111111"
+                                }
+                            },
+                            {
+                                "name": "app1name2222222",
+                                "hostPath": {
+                                    "path": "app1/file2222222"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-1",
+                                "image": "img.reg.3g: 15000/yce-alpha: test-2016-11-21",
+                                "command": [
+                                    "date3333333"
+                                ],
+                                "args": [
+                                    "date44444444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8099,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 8010,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "33"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111111",
+                                        "mountPath": "app1/dc111111"
+                                    },
+                                    {
+                                        "name": "app1name2222222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc2222222"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url1111",
+                                        "port": 1110,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1111,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 1111,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date11111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date22222222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 3,
+                "updatedReplicas": 3,
+                "unavailableReplicas": 3
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "15621075"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "app-1-100569631-284cd",
+                        "generateName": "app-1-100569631-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/app-1-100569631-284cd",
+                        "uid": "1804928b-f8e4-11e6-9033-005056915fa1",
+                        "resourceVersion": "15474287",
+                        "creationTimestamp": "2017-02-22T09: 48: 42Z",
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-1",
+                            "pod-template-hash": "100569631",
+                            "value11111111": "key1111111",
+                            "value222222": "kay2222222",
+                            "version": "test-2016-11-21"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "app-1-100569631",
+                                    "uid": "17f767df-f8e4-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15474282"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111111",
+                                "hostPath": {
+                                    "path": "app1/file111111"
+                                }
+                            },
+                            {
+                                "name": "app1name2222222",
+                                "hostPath": {
+                                    "path": "app1/file2222222"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-1",
+                                "image": "img.reg.3g: 15000/yce-alpha: test-2016-11-21",
+                                "command": [
+                                    "date3333333"
+                                ],
+                                "args": [
+                                    "date44444444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8099,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 8010,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "33"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111111",
+                                        "mountPath": "app1/dc111111"
+                                    },
+                                    {
+                                        "name": "app1name2222222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc2222222"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url1111",
+                                        "port": 1110,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1111,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 1111,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date11111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date22222222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending"
+                    }
+                },
+                {
+                    "metadata": {
+                        "name": "app-1-100569631-dqf22",
+                        "generateName": "app-1-100569631-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/app-1-100569631-dqf22",
+                        "uid": "1816b029-f8e4-11e6-9033-005056915fa1",
+                        "resourceVersion": "15474292",
+                        "creationTimestamp": "2017-02-22T09: 48: 42Z",
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-1",
+                            "pod-template-hash": "100569631",
+                            "value11111111": "key1111111",
+                            "value222222": "kay2222222",
+                            "version": "test-2016-11-21"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "app-1-100569631",
+                                    "uid": "17f767df-f8e4-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15474282"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111111",
+                                "hostPath": {
+                                    "path": "app1/file111111"
+                                }
+                            },
+                            {
+                                "name": "app1name2222222",
+                                "hostPath": {
+                                    "path": "app1/file2222222"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-1",
+                                "image": "img.reg.3g: 15000/yce-alpha: test-2016-11-21",
+                                "command": [
+                                    "date3333333"
+                                ],
+                                "args": [
+                                    "date44444444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8099,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 8010,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "33"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111111",
+                                        "mountPath": "app1/dc111111"
+                                    },
+                                    {
+                                        "name": "app1name2222222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc2222222"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url1111",
+                                        "port": 1110,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1111,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 1111,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date11111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date22222222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending"
+                    }
+                },
+                {
+                    "metadata": {
+                        "name": "app-1-100569631-xgtj1",
+                        "generateName": "app-1-100569631-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/app-1-100569631-xgtj1",
+                        "uid": "182a56d1-f8e4-11e6-9033-005056915fa1",
+                        "resourceVersion": "15474296",
+                        "creationTimestamp": "2017-02-22T09: 48: 42Z",
+                        "labels": {
+                            "author": "xueyan.xu",
+                            "name": "app-1",
+                            "pod-template-hash": "100569631",
+                            "value11111111": "key1111111",
+                            "value222222": "kay2222222",
+                            "version": "test-2016-11-21"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "app-1-100569631",
+                                    "uid": "17f767df-f8e4-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15474282"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "app1name111111",
+                                "hostPath": {
+                                    "path": "app1/file111111"
+                                }
+                            },
+                            {
+                                "name": "app1name2222222",
+                                "hostPath": {
+                                    "path": "app1/file2222222"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "app-1",
+                                "image": "img.reg.3g: 15000/yce-alpha: test-2016-11-21",
+                                "command": [
+                                    "date3333333"
+                                ],
+                                "args": [
+                                    "date44444444"
+                                ],
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8099,
+                                        "protocol": "UDP"
+                                    },
+                                    {
+                                        "name": "port2",
+                                        "containerPort": 8010,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "A",
+                                        "value": "11"
+                                    },
+                                    {
+                                        "name": "B",
+                                        "value": "22"
+                                    },
+                                    {
+                                        "name": "C",
+                                        "value": "33"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "4",
+                                        "memory": "8G"
+                                    },
+                                    "requests": {
+                                        "cpu": "2",
+                                        "memory": "4G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "app1name111111",
+                                        "mountPath": "app1/dc111111"
+                                    },
+                                    {
+                                        "name": "app1name2222222",
+                                        "readOnly": true,
+                                        "mountPath": "app1/dc2222222"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "app1/url1111",
+                                        "port": 1110,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1111,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 1111,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "lifecycle": {
+                                    "postStart": {
+                                        "exec": {
+                                            "command": [
+                                                "date11111"
+                                            ]
+                                        }
+                                    },
+                                    "preStop": {
+                                        "exec": {
+                                            "command": [
+                                                "date22222222"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending"
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "app-1-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/app-1-svc",
+                "uid": "17e81ee9-f8e4-11e6-9033-005056915fa1",
+                "resourceVersion": "15474280",
+                "creationTimestamp": "2017-02-22T09: 48: 41Z",
+                "labels": {
+                    "author": "xueyan.xu",
+                    "key11": "value12",
+                    "key111": "value112",
+                    "key111111": "value122222222",
+                    "key111111111111": "value112222222222",
+                    "name": "app-1-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "UDP",
+                        "port": 8099,
+                        "targetPort": 8099,
+                        "nodePort": 0
+                    },
+                    {
+                        "name": "name2",
+                        "protocol": "TCP",
+                        "port": 8090,
+                        "targetPort": 8090,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "keylabel1": "app-1",
+                    "name": "app1111111111111"
+                },
+                "clusterIP": "192.168.3.33",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "电信",
+        "dcId": 26,
+        "orgName": "dev",
+        "deploymentName": "a4",
+        "updateTime": "2017-02-2217: 47: 08+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a4",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a4",
+                "uid": "e07f4c35-f8e3-11e6-9033-005056915fa1",
+                "resourceVersion": "15474091",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 47: 08Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a4",
+                    "version": "16-11-05"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a4",
+                        "version": "16-11-05"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a4",
+                            "version": "16-11-05"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/payprocessor-hessian"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a4",
+                                "image": "img.reg.3g: 15000/account-ws: 16-11-05",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "unavailableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "15621075"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a4-4135359324-acva7",
+                        "generateName": "a4-4135359324-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a4-4135359324-acva7",
+                        "uid": "e09e4f79-f8e3-11e6-9033-005056915fa1",
+                        "resourceVersion": "15620570",
+                        "creationTimestamp": "2017-02-22T09: 47: 09Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a4",
+                            "pod-template-hash": "4135359324",
+                            "version": "16-11-05"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a4-4135359324",
+                                    "uid": "e08efd87-f8e3-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15474079"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/payprocessor-hessian"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a4",
+                                "image": "img.reg.3g: 15000/account-ws: 16-11-05",
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.17.106.59",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "False",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T09: 47: 12Z",
+                                "reason": "ContainersNotReady"
+                            }
+                        ],
+                        "hostIP": "172.17.106.59",
+                        "podIP": "10.0.45.3",
+                        "startTime": "2017-02-22T09: 47: 12Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a4",
+                                "state": {
+                                    "waiting": {
+                                        "reason": "ImagePullBackOff"
+                                    }
+                                },
+                                "lastState": {
+
+                                },
+                                "ready": false,
+                                "restartCount": 0,
+                                "image": "img.reg.3g: 15000/account-ws: 16-11-05",
+                                "imageID": ""
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "creationTimestamp": null
+            },
+            "spec": {
+                "ports": null,
+                "selector": null
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "办公网",
+        "dcId": 1,
+        "orgName": "ops",
+        "deploymentName": "a2",
+        "updateTime": "2017-02-2217: 45: 56+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a2",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a2",
+                "uid": "b59c100a-f8e3-11e6-977e-44a84240716a",
+                "resourceVersion": "65831296",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 45: 56Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a2",
+                    "version": "1.7.9"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a2",
+                        "version": "1.7.9"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a2",
+                            "version": "1.7.9"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a2",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "availableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "65998632"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a2-141487772-zz82y",
+                        "generateName": "a2-141487772-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a2-141487772-zz82y",
+                        "uid": "b5a1beaa-f8e3-11e6-977e-44a84240716a",
+                        "resourceVersion": "65994792",
+                        "creationTimestamp": "2017-02-22T09: 45: 56Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a2",
+                            "pod-template-hash": "141487772",
+                            "version": "1.7.9"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a2-141487772",
+                                    "uid": "b59d11a4-f8e3-11e6-977e-44a84240716a",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "65831272"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            },
+                            {
+                                "name": "default-token-5gjnz",
+                                "secret": {
+                                    "secretName": "default-token-5gjnz"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a2",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-5gjnz",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.21.1.11",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Running",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "True",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T09: 45: 58Z"
+                            }
+                        ],
+                        "hostIP": "172.21.1.11",
+                        "podIP": "10.0.46.4",
+                        "startTime": "2017-02-22T09: 45: 57Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a2",
+                                "state": {
+                                    "running": {
+                                        "startedAt": "2017-02-23T05: 51: 57Z"
+                                    }
+                                },
+                                "lastState": {
+                                    "terminated": {
+                                        "exitCode": 0,
+                                        "reason": "Completed",
+                                        "startedAt": "2017-02-23T04: 51: 57Z",
+                                        "finishedAt": "2017-02-23T05: 51: 57Z",
+                                        "containerID": "docker: //4230e33fb7549838cf5a900b8703d04270fbf707143e4c1ab50aa0bd0f44442b"
+                                    }
+                                },
+                                "ready": true,
+                                "restartCount": 20,
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "imageID": "docker: //sha256: 4911f67feeb8a27ece3c7772fc1ab96b7da3f62ca4d8604643a9b680445639d3",
+                                "containerID": "docker: //272dd87e655c851357b161531dbdba28301c0104a74f2d32684047b30710017b"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "a2-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/a2-svc",
+                "uid": "b59f1f0b-f8e3-11e6-977e-44a84240716a",
+                "resourceVersion": "65831273",
+                "creationTimestamp": "2017-02-22T09: 45: 56Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a2-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "name": "a2"
+                },
+                "clusterIP": "192.168.3.12",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "电信",
+        "dcId": 26,
+        "orgName": "ops",
+        "deploymentName": "a2",
+        "updateTime": "2017-02-2217: 45: 53+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a2",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a2",
+                "uid": "b36eeef5-f8e3-11e6-9033-005056915fa1",
+                "resourceVersion": "15473937",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 45: 53Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a2",
+                    "version": "1.7.9"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a2",
+                        "version": "1.7.9"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a2",
+                            "version": "1.7.9"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a2",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "unavailableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "15621075"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a2-141487772-rkqvm",
+                        "generateName": "a2-141487772-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a2-141487772-rkqvm",
+                        "uid": "b388146e-f8e3-11e6-9033-005056915fa1",
+                        "resourceVersion": "15620899",
+                        "creationTimestamp": "2017-02-22T09: 45: 53Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a2",
+                            "pod-template-hash": "141487772",
+                            "version": "1.7.9"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a2-141487772",
+                                    "uid": "b3709264-f8e3-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15473922"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/f-netpay-hessian"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a2",
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.4: 50000/qa3new"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_USER",
+                                        "value": "testadm"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_PASSWORD",
+                                        "value": "mWekChrhA6w7FqG/gKE2Qg=="
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_SCHEMA",
+                                        "value": "CONFIG"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "CONFIG_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_JDBCURL",
+                                        "value": "jdbc: db2: //10.151.11.3: 50009/innotest"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_USER",
+                                        "value": "ewallet"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_PASSWORD",
+                                        "value": "sWVYtLELUnKUjiagJHGvFw=="
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_SCHEMA",
+                                        "value": "FRONTEND"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MIN",
+                                        "value": "2"
+                                    },
+                                    {
+                                        "name": "FRONTEND_DB_MAX",
+                                        "value": "5"
+                                    },
+                                    {
+                                        "name": "DUBBO_APPLICATION_ENVIRONMENT",
+                                        "value": "product"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/frontend-netpay-hessian/index.jsp",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 3600,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 120,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.17.106.52",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "False",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T09: 45: 53Z",
+                                "reason": "ContainersNotReady"
+                            }
+                        ],
+                        "hostIP": "172.17.106.52",
+                        "podIP": "10.0.85.3",
+                        "startTime": "2017-02-22T09: 45: 53Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a2",
+                                "state": {
+                                    "waiting": {
+                                        "reason": "ImagePullBackOff"
+                                    }
+                                },
+                                "lastState": {
+
+                                },
+                                "ready": false,
+                                "restartCount": 0,
+                                "image": "img.reg.3g: 15000/nginx: 1.7.9",
+                                "imageID": ""
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "a2-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/a2-svc",
+                "uid": "b376ab57-f8e3-11e6-9033-005056915fa1",
+                "resourceVersion": "15473924",
+                "creationTimestamp": "2017-02-22T09: 45: 53Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a2-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "name": "a2"
+                },
+                "clusterIP": "192.168.3.73",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "办公网",
+        "dcId": 1,
+        "orgName": "dev",
+        "deploymentName": "a1",
+        "updateTime": "2017-02-2217: 45: 30+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a1",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a1",
+                "uid": "a616244f-f8e3-11e6-977e-44a84240716a",
+                "resourceVersion": "65867609",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 45: 30Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a1",
+                    "version": "201610311850"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a1",
+                        "version": "201610311850"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a1",
+                            "version": "201610311850"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/advandce-hessaion"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a1",
+                                "image": "img.reg.3g: 15000/testtimestamp: 201610311850",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1232"
+                                    },
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1111"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "http: //www.baidu.com",
+                                        "port": 8081,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1499,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "unavailableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "65998632"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a1-3338175191-zrv6f",
+                        "generateName": "a1-3338175191-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a1-3338175191-zrv6f",
+                        "uid": "a61b7c26-f8e3-11e6-977e-44a84240716a",
+                        "resourceVersion": "65998328",
+                        "creationTimestamp": "2017-02-22T09: 45: 30Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a1",
+                            "pod-template-hash": "3338175191",
+                            "version": "201610311850"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a1-3338175191",
+                                    "uid": "a617135d-f8e3-11e6-977e-44a84240716a",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "65831167"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/advandce-hessaion"
+                                }
+                            },
+                            {
+                                "name": "default-token-5gjnz",
+                                "secret": {
+                                    "secretName": "default-token-5gjnz"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a1",
+                                "image": "img.reg.3g: 15000/testtimestamp: 201610311850",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1232"
+                                    },
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1111"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-5gjnz",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "http: //www.baidu.com",
+                                        "port": 8081,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1499,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.21.1.11",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Running",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "False",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T14: 11: 48Z",
+                                "reason": "ContainersNotReady"
+                            }
+                        ],
+                        "hostIP": "172.21.1.11",
+                        "podIP": "10.0.46.16",
+                        "startTime": "2017-02-22T09: 45: 30Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a1",
+                                "state": {
+                                    "waiting": {
+                                        "reason": "CrashLoopBackOff"
+                                    }
+                                },
+                                "lastState": {
+                                    "terminated": {
+                                        "exitCode": 0,
+                                        "reason": "Completed",
+                                        "startedAt": "2017-02-23T06: 17: 52Z",
+                                        "finishedAt": "2017-02-23T06: 17: 52Z",
+                                        "containerID": "docker: //dc0bdc166550da37a24bfb17992060065e181e22793569115dc405609a1e4873"
+                                    }
+                                },
+                                "ready": false,
+                                "restartCount": 246,
+                                "image": "img.reg.3g: 15000/testtimestamp: 201610311850",
+                                "imageID": "docker: //sha256: 2725753b707a53fa3df860466ce1224ccf9813b5e61d811dcd78e0d7e88be67e",
+                                "containerID": "docker: //dc0bdc166550da37a24bfb17992060065e181e22793569115dc405609a1e4873"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "a1-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/a1-svc",
+                "uid": "a618c72f-f8e3-11e6-977e-44a84240716a",
+                "resourceVersion": "65831168",
+                "creationTimestamp": "2017-02-22T09: 45: 30Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a1-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "name": "a1"
+                },
+                "clusterIP": "192.168.3.44",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    },
+    {
+        "userName": "liyao.miao",
+        "dcName": "电信",
+        "dcId": 26,
+        "orgName": "dev",
+        "deploymentName": "a1",
+        "updateTime": "2017-02-2217: 45: 27+0800CST",
+        "deployment": {
+            "metadata": {
+                "name": "a1",
+                "namespace": "dev",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/dev/deployments/a1",
+                "uid": "a3e90bfa-f8e3-11e6-9033-005056915fa1",
+                "resourceVersion": "15473880",
+                "generation": 2,
+                "creationTimestamp": "2017-02-22T09: 45: 27Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a1",
+                    "version": "201610311850"
+                },
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "author": "liyao.miao",
+                        "name": "a1",
+                        "version": "201610311850"
+                    }
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a1",
+                            "version": "201610311850"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/advandce-hessaion"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a1",
+                                "image": "img.reg.3g: 15000/testtimestamp: 201610311850",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1232"
+                                    },
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1111"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "http: //www.baidu.com",
+                                        "port": 8081,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1499,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "",
+                        "securityContext": {
+
+                        }
+                    }
+                },
+                "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxUnavailable": 1,
+                        "maxSurge": 1
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "unavailableReplicas": 1
+            }
+        },
+        "podList": {
+            "metadata": {
+                "selfLink": "/api/v1/namespaces/dev/pods",
+                "resourceVersion": "15621075"
+            },
+            "items": [
+                {
+                    "metadata": {
+                        "name": "a1-3338175191-ctdnm",
+                        "generateName": "a1-3338175191-",
+                        "namespace": "dev",
+                        "selfLink": "/api/v1/namespaces/dev/pods/a1-3338175191-ctdnm",
+                        "uid": "a3fcfaf8-f8e3-11e6-9033-005056915fa1",
+                        "resourceVersion": "15621064",
+                        "creationTimestamp": "2017-02-22T09: 45: 27Z",
+                        "labels": {
+                            "author": "liyao.miao",
+                            "name": "a1",
+                            "pod-template-hash": "3338175191",
+                            "version": "201610311850"
+                        },
+                        "annotations": {
+                            "kubernetes.io/created-by": {
+                                "kind": "SerializedReference",
+                                "apiVersion": "v1",
+                                "reference": {
+                                    "kind": "ReplicaSet",
+                                    "namespace": "dev",
+                                    "name": "a1-3338175191",
+                                    "uid": "a3eb25d8-f8e3-11e6-9033-005056915fa1",
+                                    "apiVersion": "extensions",
+                                    "resourceVersion": "15473865"
+                                }
+                            }
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "log",
+                                "hostPath": {
+                                    "path": "/apps/log/advandce-hessaion"
+                                }
+                            },
+                            {
+                                "name": "default-token-jh3ru",
+                                "secret": {
+                                    "secretName": "default-token-jh3ru"
+                                }
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "a1",
+                                "image": "img.reg.3g: 15000/testtimestamp: 201610311850",
+                                "ports": [
+                                    {
+                                        "name": "port1",
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1232"
+                                    },
+                                    {
+                                        "name": "CONFIG_SYS",
+                                        "value": "1111"
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "cpu": "1",
+                                        "memory": "2G"
+                                    },
+                                    "requests": {
+                                        "cpu": "500m",
+                                        "memory": "1G"
+                                    }
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "name": "log",
+                                        "mountPath": "/apps/log"
+                                    },
+                                    {
+                                        "name": "default-token-jh3ru",
+                                        "readOnly": true,
+                                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                                    }
+                                ],
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "http: //www.baidu.com",
+                                        "port": 8081,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 1499,
+                                    "timeoutSeconds": 1,
+                                    "periodSeconds": 60,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "serviceAccountName": "default",
+                        "nodeName": "172.17.106.53",
+                        "securityContext": {
+
+                        }
+                    },
+                    "status": {
+                        "phase": "Pending",
+                        "conditions": [
+                            {
+                                "type": "Ready",
+                                "status": "False",
+                                "lastProbeTime": null,
+                                "lastTransitionTime": "2017-02-22T09: 45: 31Z",
+                                "reason": "ContainersNotReady"
+                            }
+                        ],
+                        "hostIP": "172.17.106.53",
+                        "podIP": "10.0.78.3",
+                        "startTime": "2017-02-22T09: 45: 31Z",
+                        "containerStatuses": [
+                            {
+                                "name": "a1",
+                                "state": {
+                                    "waiting": {
+                                        "reason": "ErrImagePull"
+                                    }
+                                },
+                                "lastState": {
+
+                                },
+                                "ready": false,
+                                "restartCount": 0,
+                                "image": "img.reg.3g: 15000/testtimestamp: 201610311850",
+                                "imageID": ""
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "service": {
+            "metadata": {
+                "name": "a1-svc",
+                "namespace": "dev",
+                "selfLink": "/api/v1/namespaces/dev/services/a1-svc",
+                "uid": "a3f42123-f8e3-11e6-9033-005056915fa1",
+                "resourceVersion": "15473867",
+                "creationTimestamp": "2017-02-22T09: 45: 27Z",
+                "labels": {
+                    "author": "liyao.miao",
+                    "name": "a1-svc",
+                    "type": "service"
+                }
+            },
+            "spec": {
+                "type": "ClusterIP",
+                "ports": [
+                    {
+                        "name": "name1",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080,
+                        "nodePort": 0
+                    }
+                ],
+                "selector": {
+                    "name": "a1"
+                },
+                "clusterIP": "192.168.3.184",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {
+
+                }
+            }
+        }
+    }
+]
+}

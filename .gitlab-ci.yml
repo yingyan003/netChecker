@@ -1,0 +1,42 @@
+variables:
+  NETCHECKERIMAGE: "netChecker"
+  PINGIMAGE: "ping"
+  PONGIMAGE: "pong"
+
+stages:
+- netguard
+- ping
+- pong
+
+netguard_build:
+  stage: netguard
+  script:
+    - export GOPATH=$PWD
+    - cd src/netguarder/
+    - go build netguard.go
+    - echo `git log | head -1 | cut -d ' ' -f2` > manifest
+    - docker build -t $NETCHECKERIMAGE:$CI_PIPELINE_ID .
+    - docker tag $NETCHECKERIMAGE:$CI_PIPELINE_ID img.reg.3g:15000/$NETCHECKERIMAGE:$CI_PIPELINE_ID
+    - docker push img.reg.3g:15000/$NETCHECKERIMAGE:$CI_PIPELINE_ID
+
+ping_build:
+  stage: ping
+  script:
+    - export GOPATH=$PWD
+    - cd src/ping/
+    - go build ping.go
+    - echo `git log | head -1 | cut -d ' ' -f2` > manifest
+    - docker build -t $PINGIMAGE:$CI_PIPELINE_ID .
+    - docker tag $PINGIMAGE:$CI_PIPELINE_ID img.reg.3g:15000/$PINGIMAGE:$CI_PIPELINE_ID
+    - docker push img.reg.3g:15000/$PINGIMAGE:$CI_PIPELINE_ID
+
+pong_build:
+  stage: pong
+  script:
+    - export GOPATH=$PWD
+    - cd src/pong/
+    - go build pong.go
+    - echo `git log | head -1 | cut -d ' ' -f2` > manifest
+    - docker build -t $PONGIMAGE:$CI_PIPELINE_ID .
+    - docker tag $PONGIMAGE:$CI_PIPELINE_ID img.reg.3g:15000/$PONGIMAGE:$CI_PIPELINE_ID
+    - docker push img.reg.3g:15000/$PONGIMAGE:$CI_PIPELINE_ID
