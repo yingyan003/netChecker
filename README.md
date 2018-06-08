@@ -20,6 +20,7 @@ kubernetes（k8s）集群的网络状况有时会出现问题。应用容器间�
 ![](https://github.com/yingyan003/netChecker/blob/master/picture/projStruct.png)
 
 ### 项目说明：
+
 该项目有3个独立的子模块：netChecker、ping、pong。
 netChecker：负责定时去k8s集群获取ping对应的所有pod列表，所有work节点列表， 和pong对应的service（只建一个）。
 ping：定时获取netChecker收集的信息。并利用这些信息进行集群网络检测。在pod->pod/node/service类型的检测中，
@@ -34,7 +35,7 @@ pong：在pod->pod类型的检测中起作用，仅供部署ping对应的pod来�
 指定的镜像仓库（当然这其中的配置这里就不细说了）。镜像生成后，就可以用来创建容器了。
 
 netChecker：
-使用deployment资源对象部署。只需部署一个，副本数自行选择。
+使用deployment资源对象部署。只需部署一个，副本数只能有1个，否则频道中的消息就会重复
 
 ping/pong：
 使用k8s的资源对象daemonset（保证每个work节点只有一个pod的）部署。保证每个节点上仅有一个
