@@ -7,7 +7,7 @@ import (
 )
 
 func True(w http.ResponseWriter, r *http.Request) {
-	data := cache.Get(constant.ALL_DATA)
+	data := cache.Get(constant.TRUE_DATA)
 	log.Infof("handler True http requst success")
 	fmt.Fprintf(w, "%s\n", data)
 }
@@ -19,7 +19,7 @@ func False(w http.ResponseWriter, r *http.Request) {
 }
 
 func All(w http.ResponseWriter, r *http.Request) {
-	data := cache.Get(constant.TRUE_DATA)
+	data := cache.Get(constant.ALL_DATA)
 	log.Infof("handler All http requst success")
 	fmt.Fprintf(w, "%s\n", data)
 }
