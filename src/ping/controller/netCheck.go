@@ -61,7 +61,8 @@ func subPod() {
 			}
 			log.Infof("subPod getSelfPod success")
 			for _, pod := range pongInfos {
-				r := netTest(pod.PodIP, 8080, "pod", &self, &pod)
+				//TODO 注意：pongInfos是指针类型的切片，对指针类型的切片迭代时，注意pod的指针，会随着迭代结束，通通指向最后一次迭代的值
+				r := netTest(pod.PodIP, 8080, "pod", &self, pod)
 				report = append(report, r)
 			}
 			publist(constant.CHANNEL_REPORT_POD, report)
@@ -75,7 +76,7 @@ func subNode() {
 	nodePort := int32(utils.LoadEnvVarInt(constant.ENV_NODEPORT, constant.NODEPORT))
 	subConn = cache.GetSubConn(constant.CHANNEL_NODE)
 	if subConn == nil {
-		subConn=cache.RetrySubConn(constant.CHANNEL_POD)
+		subConn=cache.RetrySubConn(constant.CHANNEL_NODE)
 	}
 	for {
 		var report types.Report
@@ -101,7 +102,8 @@ func subNode() {
 			}
 			log.Infof("subNode getSelfPod success")
 			for _, node := range nodeInfos {
-				r := netTest(node.HostIP, nodePort, "node", &self, &node)
+				////TODO 注意：nodeInfos是指针类型的切片，对指针类型的切片迭代时，注意node的指针，会随着迭代结束，通通指向最后一次迭代的值
+				r := netTest(node.HostIP, nodePort, "node", &self, node)
 				report = append(report, r)
 			}
 			publist(constant.CHANNEL_REPORT_NODE, report)
@@ -141,7 +143,7 @@ func subSvc() {
 			log.Infof("subSvc getSelfPod success. self=%s",*self)
 			for _, port := range svcInfo.Ports {
 				//这里实际上只测试了svc的port端口，并没有测试nodeport端口
-				r := netTest(svcInfo.ClusterIP, port.Port, "service", &self, &port)
+				r := netTest(svcInfo.ClusterIP, port.Port, "service", &self, port)
 				report = append(report, r)
 			}
 			publist(constant.CHANNEL_REPORT_SVC, report)
@@ -183,11 +185,13 @@ func netTest(ip string, port int32, tp string, from, to interface{}) *types.Reco
 	go goTelnet("www.baidu.com", 80, ch2)
 	connected := <-ch1
 	debugConn := <-ch2
-
+	
+	//TODO 注意：由于to是指针类型切片的迭代结果，如果直接将to赋值给Record中的To时，所有的Record中的To的值，都将变为to最后一次迭代的结果
+	toTmp:=to
 	r := &types.Record{
 		Type:   tp,
 		From:   from,
-		To:     to,
+		To:     toTmp,
 		Result: connected,
 		Timestamp:   time.Now().Format("2006-01-02 15:04:05"),
 		Reason: "",
