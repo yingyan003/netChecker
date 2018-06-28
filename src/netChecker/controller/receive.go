@@ -38,7 +38,7 @@ func ReceiveAndSaveData() {
 		reportAll = append(reportAll, podReport...)
 
 		reportSimp := getSimpleData(&reportAll)
-		reportNTN := getNodeToNodeData(&nodeReport)
+		reportNTN := getNTNDataFromPodReport(&nodeReport)
 
 		saveData(reportAll, constant.ALL)
 		saveData(reportAll, constant.FALSE)
@@ -60,9 +60,6 @@ func getNodeLength() int {
 		nodeLength, _ = strconv.Atoi(nodelen)
 		log.Infof("receive getNodeLength from redis success. nodelength=%d", nodeLength)
 	}
-
-	log.Infof("-----getNodeLength after redis. redislen=%s, nodeLength=%d", nodelen, nodeLength)
-
 	//从redis获取失败则从k8s中获取
 	if nodeLength == 0 {
 		client := k8s.KubeClient
@@ -88,7 +85,6 @@ func getDataByChannel(channel string, reportCh chan Records) {
 	receivedCh := make(chan int)
 	records, recordsTmp := Records{}, Records{}
 
-	//todo 这个定时器的时间需考究。
 	timeout := time.Duration(utils.LoadEnvVarInt(constant.ENV_RECEIVE_TIMEOUT, constant.RECEIVE_TIMEOUT))
 	timer := time.NewTimer(time.Second * timeout)
 	subConn = cache.GetSubConn(channel)
@@ -131,19 +127,18 @@ func getDataByChannel(channel string, reportCh chan Records) {
 		//本轮消息接受完毕
 		case <-receivedCh:
 			reportCh <- records
-			data, _ := json.Marshal(records)
-			log.Infof("getDataByChannel success. reason is reveive all data. channel=%s, length=%d, data=%s", channel, nodeCount, string(data))
+			_, _ = json.Marshal(records)
+			log.Infof("getDataByChannel success. reason is reveive all data. channel=%s, length=%d", channel, nodeCount)
 			nodeCount = 0
-			//清空数据，等待下一轮接收
 			records = Records{}
-
+			//当本轮数据成功接收（没有node/ping故障时），防止因超时而执行下一个case，导致空数据（成功接收时，这里将records重置为空对象）覆盖redis的网络检测结果数据
+			timer.Reset(time.Second * time.Duration(utils.LoadEnvVarInt(constant.ENV_GET_RESOURCE_TICKER, constant.GET_RESOURCE_TICKER)))
 			//本轮消息接收超时
 		case <-timer.C:
 			reportCh <- records
-			data, _ := json.Marshal(records)
-			log.Infof("getDataByChannel success. reason is timeout. channel=%s, length=%d,  data=%s", channel, nodeCount, string(data))
+			_, _ = json.Marshal(records)
+			log.Infof("getDataByChannel success. reason is timeout. channel=%s, length=%d", channel, nodeCount)
 			nodeCount = 0
-			//清空数据，等待下一轮接收
 			records = Records{}
 		}
 	}
@@ -203,8 +198,12 @@ func saveData(report interface{}, flag int) {
 	}
 
 	utils.CheckError("saveData json marshal failed. key="+key, err)
-	cache.SetWithExpire(key, string(result), strconv.Itoa(constant.REDIS_EXPIRE))
-	log.Infof("saveData success. key=%s, data=%s", key, string(result))
+	cache.SetWithExpire(key, string(result), redisExpire)
+	if string(result) != "null" {
+		log.Infof("saveData success. key=%s, data!=null", key)
+	} else {
+		log.Infof("saveData success. key=%s, data=%s", key, string(result))
+	}
 }
 
 func getSimpleData(reportAll *Records) ReportSimp {
@@ -213,7 +212,6 @@ func getSimpleData(reportAll *Records) ReportSimp {
 	reportSimp := ReportSimp{}
 	podInfo := types.PodInfo{}
 	nodeInfo := types.NodeInfo{}
-	//svcInfo := types.ServiceInfo{}
 
 	data, err := json.Marshal(reportAll)
 	if err != nil {
@@ -233,9 +231,6 @@ func getSimpleData(reportAll *Records) ReportSimp {
 			json.Unmarshal(item.To, &nodeInfo)
 			recordSimp.DstName = nodeInfo.Name
 		} else if strings.EqualFold(item.Type, "service") {
-			//json.Unmarshal(item.To, &svcInfo)
-			//因为ping checknet时，检测service类型的item.To只封装了port和nodeport
-			//由于检测的service只有一个，命名为pong-svc，映射到pond，故此处写死了
 			recordSimp.DstName = "pong-svc"
 		}
 		reportSimp = append(reportSimp, *recordSimp)
@@ -244,7 +239,55 @@ func getSimpleData(reportAll *Records) ReportSimp {
 	return reportSimp
 }
 
-func getNodeToNodeData(nodeReport *Records) ReportNodeToNode {
+//从pod->pod的网络检测结果中解析node->node的网络信息
+func getNTNDataFromPodReport(podReport *Records) ReportNodeToNode {
+	if len(*podReport) != 0 {
+		ntns := make(ReportNodeToNode, 0)
+
+		ntn := new(RecordNodeToNode)
+		ntn.To = make([]NodeResult, 0)
+
+		srcIp := (*podReport)[0].From.HostIP
+		for _, pod := range *podReport {
+			if strings.EqualFold(srcIp, pod.From.HostIP) {
+				ntn.SrcIp = pod.From.HostIP
+				result := getNTNResultFromPod(&pod)
+				ntn.To = append(ntn.To, *result)
+			} else {
+				ntns = append(ntns, *ntn)
+
+				ntn = new(RecordNodeToNode)
+				ntn.To = make([]NodeResult, 0)
+				srcIp = pod.From.HostIP
+
+				ntn.SrcIp = pod.From.HostIP
+				result := getNTNResultFromPod(&pod)
+				ntn.To = append(ntn.To, *result)
+			}
+		}
+		log.Infof("getNTNDataFromPodReport success。 data=%v", ntns)
+		return ntns
+	}
+	return nil
+}
+
+func getNTNResultFromPod(pod *Record) *NodeResult {
+	podInfo := types.PodInfo{}
+	err := json.Unmarshal(pod.To, &podInfo)
+	if err != nil {
+		log.Errorf("getNTNResultFromPod unmarshal failed. err=%s", err)
+		return nil
+	}
+	result := &NodeResult{}
+	result.DstIP = podInfo.HostIP
+	result.Result = pod.Result
+	result.Reason = pod.Reason
+	result.Timestamp = pod.Timestamp
+	return result
+}
+
+//从pod->node的网络检测结果中解析node->node的网络信息
+func getNTNDataFromNodeReport(nodeReport *Records) ReportNodeToNode {
 	//组装node to node数据，方便前端展示
 	if len(*nodeReport) != 0 {
 		ntns := make(ReportNodeToNode, 0)
@@ -256,7 +299,7 @@ func getNodeToNodeData(nodeReport *Records) ReportNodeToNode {
 		for _, node := range *nodeReport {
 			if strings.EqualFold(srcIp, node.From.HostIP) {
 				ntn.SrcIp = node.From.HostIP
-				result := getNTNResult(&node)
+				result := getNTNResultFromNode(&node)
 				ntn.To = append(ntn.To, *result)
 			} else {
 				ntns = append(ntns, *ntn)
@@ -266,17 +309,17 @@ func getNodeToNodeData(nodeReport *Records) ReportNodeToNode {
 				srcIp = node.From.HostIP
 
 				ntn.SrcIp = node.From.HostIP
-				result := getNTNResult(&node)
+				result := getNTNResultFromNode(&node)
 				ntn.To = append(ntn.To, *result)
 			}
 		}
-		log.Infof("getNodeToNodeData success。 data=%v", ntns)
+		log.Infof("getNTNDataFromNodeReport success。 data=%v", ntns)
 		return ntns
 	}
 	return nil
 }
 
-func getNTNResult(node *Record) *NodeResult {
+func getNTNResultFromNode(node *Record) *NodeResult {
 	nodeInfo := types.NodeInfo{}
 	err := json.Unmarshal(node.To, &nodeInfo)
 	if err != nil {
