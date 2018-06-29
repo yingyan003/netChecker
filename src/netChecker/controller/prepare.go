@@ -16,12 +16,14 @@ import (
 
 var log *mylog.Logger
 var cache *utils.RedisClient
+var redisExpire string
 
 func Init() {
 	log = utils.GetLog()
 	k8s.NewKubeClient()
 	utils.NewRedis(constant.NETGUARD_MAX_IDLE)
 	cache = utils.Redis
+	redisExpire = utils.LoadEnvVar(constant.ENV_REDIS_EXPIRE, constant.REDIS_EXPIRE)
 }
 
 //定期获取k8s资源并写入redis
@@ -38,7 +40,7 @@ func GetKubeResAndPublish() {
 
 func getPings(client *kube.Clientset) []*types.PodInfo {
 	pingInfos := make([]*types.PodInfo, 0)
-	pods, err := client.CoreV1().Pods("yce").List(meta_v1.ListOptions{LabelSelector: "type=ping"})
+	pods, err := client.CoreV1().Pods("yce").List(meta_v1.ListOptions{LabelSelector: "name=ping"})
 	if err != nil {
 		log.Errorf("getPings: list pods failed. err=%s, pods=%s", err, pods)
 		return pingInfos
@@ -58,7 +60,7 @@ func getPings(client *kube.Clientset) []*types.PodInfo {
 
 func getPonds(client *kube.Clientset, pingInfos []*types.PodInfo) {
 	pongInfos := make([]*types.PodInfo, 0)
-	pods, err := client.CoreV1().Pods("yce").List(meta_v1.ListOptions{LabelSelector: "type=pong"})
+	pods, err := client.CoreV1().Pods("yce").List(meta_v1.ListOptions{LabelSelector: "name=pong"})
 	if err != nil {
 		log.Errorf("getPonds: list pods failed. err=%s. pod=%s", err, pods)
 	}
@@ -97,7 +99,7 @@ func getNodes(client *kube.Clientset, pingInfos []*types.PodInfo) {
 	}
 
 	//将node数通过一般的key-value方式存于Redis中，目的在于netgaurd订阅获取netcheck结果后，组装数据
-	if ok, err := cache.SetWithExpire("nodelength", strconv.Itoa(len(nodeInfos)), strconv.Itoa(constant.REDIS_EXPIRE)); !ok {
+	if ok, err := cache.SetWithExpire("nodelength", strconv.Itoa(len(nodeInfos)),redisExpire); !ok {
 		log.Infof("prepare getNodes save nodelength to redis failed. nodelength=%d, err=%s", len(nodeInfos), err)
 	}
 
