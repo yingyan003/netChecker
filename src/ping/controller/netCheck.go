@@ -116,7 +116,7 @@ func subSvc() {
 
 	subConn = cache.GetSubConn(constant.CHANNEL_SVC)
 	if subConn == nil {
-		subConn=cache.RetrySubConn(constant.CHANNEL_POD)
+		subConn=cache.RetrySubConn(constant.CHANNEL_SVC)
 	}
 	for {
 		var report types.Report
