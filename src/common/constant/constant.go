@@ -6,7 +6,7 @@ const (
 	LOG_LEVEL_ERROR = 5
 
 	//K8S
-	APISERVER = "k8s任意一个master节点的apiserver所在的节点ip:apiserver开放的端口"
+	APISERVER = "10.151.160.11:8080"
 	CAPATH    = "ca.crt"
 	CERTPATH  = "client.crt"
 	KEYPATH   = "client.key"
@@ -28,14 +28,18 @@ const (
 	ENV_REDIS_EXPIRE = "REDIS_EXPIRE"
 	REDIS_EXPIRE = "60"
 
-	ENV_RECEIVE_TIMEOUT = "RECEIVE_TIMEOUT"
-	//建议超时时间= 1 + 2 * len(k8s work node) + x
+	// 每轮数据采集的超时时间
+	// （1 + ping网络检测超时时间 + n） < 建议超时时间(s) < （1 + ping网络检测超时时间 + len(k8s work node) + x）
 	//说明：
 	//1：每轮从prepare发布成功到receive接受完该轮数据的时间差，基本为1s
-	//2：每个ping(每个节点只部署一个名字为ping的pod)网络检测一次失败时的总超时时间：ping->pong和ping->baidu，超时时间各为1s
-	//3：x(x可选，作集群添加节点时用)
-	//此处是： 1 + 2*8 +3（集群可扩展3个节点）
-	RECEIVE_TIMEOUT = 20
+	//2：每个ping(每个节点只部署一个名字为ping的pod)网络检测一次失败时的总超时时间：1s<=超时<2s：
+	// 	 因为ping->pong和ping->baidu，超时时间各设为1s(两个goroutine同时检测)
+	//3：n（每个ping执行时间，pub/sub时间都会存在一些时延，最好预留个几秒中等待）
+	//4：x（预留集群扩容的节点数，可选，作集群添加节点时用）
+	//5：当然，超时时间可以比上面的范围大，但要小于每轮从k8s获取资源列表的时间间隔（60s）小。
+	//   可如此一来，前端获取到的数据即时性就很差了
+	ENV_RECEIVE_TIMEOUT = "RECEIVE_TIMEOUT"
+	RECEIVE_TIMEOUT     = 10
 
 	ALL          = iota
 	TRUE
@@ -56,7 +60,7 @@ const (
 const (
 	DEBUG_FAIL = "源pod网络出不去"
 
-	NODEPORT     = 32079
+	NODEPORT     = 32089
 	ENV_NODEPORT = "NODEPORT"
 
 	TELNET_TIMER     = 60
@@ -67,16 +71,12 @@ const (
 const (
 	//REDIS
 	ENV_REDISHOST = "REDISHOST"
-	//1. 这里的redis用的是deployment的形式部署的。并建了一个对应的service
-	//2. k8s集群中的pod通过kubedns的形式访问该redis服务。
-	//只需将redis的host设置为"serviceName.namespace"，
-	//kubedns自动会解析该短域名，并访问Redis服务。
-	REDISHOST = "redis-master-svc.zxy:6379"
+	REDISHOST     = "redis-master-svc.yce:6379"
 
 	NETGUARD_MAX_IDLE = 5
 	NETCHECK_MAX_IDLE = 5
 	MAX_ACTIVE        = 100
-	IDLE_TIMEOUT      = 0 //180
+	IDLE_TIMEOUT      = 180 //180
 
 	CHANNEL_POD  = "POD"
 	CHANNEL_NODE = "NODE"
