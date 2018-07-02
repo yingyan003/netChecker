@@ -71,7 +71,8 @@ const (
 const (
 	//REDIS
 	ENV_REDISHOST = "REDISHOST"
-	REDISHOST     = "redis-master-svc.yce:6379"
+        //短域名的方式访问redis服务，kubeDNS会自动做服务发现
+	REDISHOST     = "redis-master-svc.zxy:6379"
 
 	NETGUARD_MAX_IDLE = 5
 	NETCHECK_MAX_IDLE = 5
